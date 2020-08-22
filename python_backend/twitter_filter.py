@@ -4,6 +4,7 @@ import tweepy
 import datetime
 import json
 from textblob import TextBlob
+from twitter_store import TweetStore
 
 topics_to_see = ["#edm", "@Skrillex", "@Madeon", "@Zedd", "#porterrobinson"]
 
@@ -22,6 +23,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
+store = TweetStore()
 
 class StreamListener(tweepy.StreamListener):
 
@@ -45,7 +47,7 @@ class StreamListener(tweepy.StreamListener):
 			"subjectivity": subjectivity,
 			"received_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 			}
-
+			store.push(tweet_item)
 			print(tweet_item)
 
 	def on_status(self, status_code):
