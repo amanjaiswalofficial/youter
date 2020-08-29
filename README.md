@@ -10,8 +10,11 @@ Setup virtual environment and install required libraries.
 
 Create an app on [Twitter for developers](https://developer.twitter.com/en/portal/dashboard) and obtain
 >API KEY
+
 >API SECRET
+
 >ACCESS KEY
+
 >ACCESS SECRET
 
 Update ```config.json``` with these values
@@ -24,5 +27,6 @@ Update the **topic_to_see** in ```twitter_filter.py```
 
 Run with
 
-```cd python_backend```
+```cd backend```
+
 ```python3 twitter_filter.py```

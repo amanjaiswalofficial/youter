@@ -130,3 +130,6 @@ dmypy.json
 
 config2.json
 .gitignore
+frontend/node_modules
+__pycache__
+.vscode/
