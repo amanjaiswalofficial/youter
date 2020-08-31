@@ -133,3 +133,4 @@ config2.json
 frontend/node_modules
 __pycache__
 .vscode/
+snippets

@@ -1,3 +1,13 @@
+@font-face {
+  font-family: 'nexa-light';
+  src: local('nexa-light'), url(./fonts/nexa-light.otf) format('truetype');
+}
+
+@font-face {
+  font-family: 'nexa-bold';
+  src: local('nexa-bold'), url(./fonts/nexa-bold.otf) format('truetype');
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
