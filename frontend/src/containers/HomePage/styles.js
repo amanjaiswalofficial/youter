@@ -1,4 +1,5 @@
 import {createUseStyles} from 'react-jss'
+import { COLORS } from 'colors'
 
 
 export const useStyles = createUseStyles({
@@ -9,14 +10,12 @@ export const useStyles = createUseStyles({
         border: "1px solid black",
         display: "block",
         marginLeft: "auto",
-        marginTop: "auto"
+        marginTop: "auto",
         
     },
     downIcon: {
         height: "64px",
-        width: "64px"
-    },
-    root: {
+        width: "64px",
     },
     scrollButton: {
         position: "fixed",
@@ -27,6 +26,9 @@ export const useStyles = createUseStyles({
         border: "none",
         outline: "none !important",
         outlineOffset: "none !important",
+        "&:hover": {
+            cursor: "none"
+        }
     },
     cursor: {
         width: "1em",
@@ -38,5 +40,16 @@ export const useStyles = createUseStyles({
         transform: "translate(-50%, -50%)",
         zIndex: "113",
         pointerEvents: "none"
+    },
+    // custom cursor CSS for hover
+    cursorTitle: {
+        width: "2em",
+        height: "2em",
+        border: "1px solid grey"
+    },
+    cursorScrollButton: {
+        borderRadius: "3%",
+        width: "4em",
+        height: "4em"
     }
   })

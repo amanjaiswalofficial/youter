@@ -14,6 +14,9 @@ export const useStyles = createUseStyles({
         fontWeight: "bold",
         lineHeight: 0.8,
         fontFamily: "nexa-bold",
-        fontSize: "15vw"
-    },
+        fontSize: "15vw",
+    }
   })
+  /**
+   * "&:hover + $child"
+   */
