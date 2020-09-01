@@ -1,7 +1,4 @@
 import React, {useRef, useState, useEffect} from 'react'
-import { Container, Row, Col } from 'react-grid-system';
-
-import {Parallax, ParallaxLayer} from 'react-spring/renderprops-addons'
 
 import { setConfiguration } from 'react-grid-system';
 import downCircleIcon from "../../assets/icons/icon-down-1.png"
@@ -14,16 +11,11 @@ import ContactInfo from 'components/ContactInfo'
 
 setConfiguration({ maxScreenClass: 'xxl' });
 
-//const [nowRef, setNowRef] = useState()
-const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)   
-
 const HomePage = () => {
 
     const classes = useStyles()
 
     const [nextRef, setNextRef] = useState()
-    const [cursorCoord, setCursorCoord] = useState({x: "0px", y: "0px"})
-
 
     const ref1 = useRef(null)
     const ref2 = useRef(null)
@@ -48,9 +40,7 @@ const HomePage = () => {
 
     const moveCustomCursor = (e) => {
 
-        let element = document.getElementById("myCursor")
-        element.style.top = e.clientY+"px"
-        element.style.left = e.clientX+"px"
+        document.getElementById("myCursor").setAttribute("style", `top: ${e.clientY + window.pageYOffset}px; left: ${e.clientX + window.pageXOffset}px`)
 
     }
 
@@ -58,28 +48,16 @@ const HomePage = () => {
 
     return (
         <div>
+        <div id="myCursor" className={classes.cursor}/>
         <button onClick={e => scrollDown(nextRef)} className={classes.scrollButton}>
             <img src={downCircleIcon} alt="" className={classes.downIcon}/>
         </button>
-        <Container fluid>
-            <Row>
-                <Banner ref={ref1}/>
-            </Row>
-            <Row>
-                <UserInput ref={ref2}/>
-            </Row>
-            <Row>
-                <ContactInfo ref={ref3}/>
-            </Row>
-        </Container>
-        <div id="myCursor" className={classes.cursor}/>
+        <Banner ref={ref1}/>
+        <UserInput ref={ref2}/>
+        <ContactInfo ref={ref3}/>
         </div>            
     
     )
 }
 
 export default HomePage
-
-/**
- * 
- */

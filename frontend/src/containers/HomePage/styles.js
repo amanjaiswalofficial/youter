@@ -1,9 +1,9 @@
 import {createUseStyles} from 'react-jss'
-import { COLORS } from '../../colors'
+
 
 export const useStyles = createUseStyles({
     parent: {
-        scrollBehavior: "smooth"
+        scrollBehavior: "smooth",
     },
     downIconParent: {
         border: "1px solid black",
@@ -27,7 +27,6 @@ export const useStyles = createUseStyles({
         border: "none",
         outline: "none !important",
         outlineOffset: "none !important",
-        border: 0
     },
     cursor: {
         width: "1em",
@@ -35,7 +34,7 @@ export const useStyles = createUseStyles({
         border: "1px solid black",
         borderRadius:"50%",
         position: "absolute",
-        transition: "0.1s",
+        transition: ".0s ease",
         transform: "translate(-50%, -50%)",
         zIndex: "113",
         pointerEvents: "none"
