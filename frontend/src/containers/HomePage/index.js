@@ -5,7 +5,7 @@ import downCircleIcon from "../../assets/icons/icon-down-1.png"
 import {useStyles} from './styles'
 
 import Banner from 'components/Banner'
-import UserInput from 'components/UserInput'
+import UserInteraction from 'components/UserInteraction'
 import ContactInfo from 'components/ContactInfo'
 import { AppContext } from "context/appContext"
 
@@ -28,7 +28,6 @@ const HomePage = () => {
 
     useEffect(() => {
         setHoverItem(state.hoverItem.className)
-        console.log(state.hoverItem.className)
     }, [state.hoverItem.className])
 
     useEffect(() => {
@@ -75,8 +74,7 @@ const HomePage = () => {
     return (
         <div>
         <div id="myCursor" className={`${classes.cursor} ${classes[hoverItem]}`}/>
-        <Banner ref={ref1}/>
-        <UserInput ref={ref2}/>
+        <UserInteraction ref={ref2}/>
         <ContactInfo ref={ref3}/>
         <button 
             onClick={e => scrollDown(nextRef)} 
@@ -94,3 +92,6 @@ const HomePage = () => {
 }
 
 export default HomePage
+/**
+ * <Banner ref={ref1}/>
+ */

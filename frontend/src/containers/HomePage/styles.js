@@ -51,5 +51,10 @@ export const useStyles = createUseStyles({
         borderRadius: "3%",
         width: "4em",
         height: "4em"
+    },
+    addButton: {
+        borderRadius: "3%",
+        width: "4em",
+        height: "4em",
     }
   })

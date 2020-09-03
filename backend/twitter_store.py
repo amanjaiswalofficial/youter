@@ -1,37 +1,77 @@
+from __future__ import absolute_import, print_function
+
+import tweepy
+import datetime
 import json
-import redis
+from textblob import TextBlob
+from store_setup import tweet_store, tag_store, get_tags
 
-class TweetStore:
+topics_to_see = ["#edm", "@Skrillex", "@Madeon", "@Zedd", "#porterrobinson"]
 
-    redis_host = "localhost"
-    redis_port = 6379
-    redis_password = ""
+file_path = "../config.json"
 
-    redis_key = "tweets"
-    num_tweets = 20
+with open(file_path) as f:
+	twitter_api = json.loads(f.read())
 
-    def __init__(self):
-        self.db = r = redis.Redis(
-            host = self.redis_host,
-            port = self.redis_port,
-            password = self.redis_password
-        )
-        self.trim_count = 0
 
-    def push(self, data):
-        self.db.lpush(self.redis_key, json.dumps(data))
-        self.trim_count += 1
+consumer_key = twitter_api["consumer_key"]
+consumer_secret = twitter_api["consumer_secret"]
+access_token = twitter_api["access_token"]
+access_token_secret = twitter_api["access_token_secret"]
 
-        if self.trim_count > 100:
-            self.db.ltrim(self.redis_key, 0, self.num_tweets)
-            self.trim_count = 0
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
 
-    def tweets(self, tweet=15):
-        tweets = []
+api = tweepy.API(auth)
 
-        for item in self.db.lrange(self.redis_key, 0, limit-1):
-            tweet_obj = json.loads(item)
-            tweets.append(tweet_obj)
-        
 
-        return tweets
+class StreamListener(tweepy.StreamListener):
+
+	def on_data(self, data):
+		tweet = json.loads(data)
+		if "RT @" not in tweet['text']:
+
+			blob = TextBlob(tweet['text'])
+			sent = blob.sentiment
+			polarity = sent.polarity
+			subjectivity = sent.subjectivity
+
+			tweet_item = {
+				"id_str": tweet['id_str'],
+				"text": tweet['text'],
+				"username": tweet['user']['screen_name'],
+				"name": tweet['user']['name'],
+				"profile_image_url": tweet['user']['profile_image_url'],
+				"polarity": polarity,
+				"subjectivity": subjectivity,
+				"received_at":
+					datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+				}
+			tweet_store.push(tweet_item)
+			print(tweet_item)
+
+	def on_status(self, status_code):
+		if status_code == 420:
+			return False
+
+	def on_error(self, status_code):
+		print(status_code)
+		return False
+
+
+stream_listener = StreamListener()
+stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
+
+stream.filter(track=get_tags())
+
+"""
+while True:
+	if twitterStream.running is True:
+		twitterStream.disconnect()
+	keywords=getKeywordsFromDb()
+	if keywords=='':
+		print 'no keywords to listen to'
+	else:
+	twitterStream.filter(track=[keywords],async=True)
+	time.sleep(3600) # sleep for one hour
+"""

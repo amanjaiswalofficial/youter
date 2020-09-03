@@ -8,4 +8,7 @@ export const useStyles = createUseStyles({
         background: COLORS.white,
         alignItems: "center"
     },
+    input: {
+        border: '1px solid yellow'
+    }
   })

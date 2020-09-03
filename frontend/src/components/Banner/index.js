@@ -38,7 +38,12 @@ const Banner = (props, ref) => {
                         <span
                         data-cursorid="cursorTitle"
                         onMouseOver={setClass} 
-                        onMouseLeave={resetClass}>Read What Matters</span>
+                        onMouseLeave={resetClass}>
+                        Read What Matters
+                        </span>
+                    </div>
+                    <div>
+                        Youter: Your Personal Twitter
                     </div>
                 </Col>
             </Row>
