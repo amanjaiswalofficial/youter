@@ -2,16 +2,16 @@ import json
 import redis
 
 
-class RedisStore:
-    redis_host = "localhost"
-    redis_port = 6379
-    redis_password = ""
+class Redis:
 
-    def __init__(self):
+    def __init__(self, host, port, password):
+        self.host = host
+        self.port = port
+        self.password = password
         self.db = r = redis.Redis(
-            host=self.redis_host,
-            port=self.redis_port,
-            password=self.redis_password
+            host=self.host,
+            port=self.port,
+            password=self.password
         )
         self.count = 0
 
@@ -30,10 +30,13 @@ class RedisStore:
     def get_data(self, key, amount):
         items = []
         for item in self.db.lrange(key, 0, amount - 1):
-            if isinstance(item, bytes):
-                value = item.decode()
-            else:
-                value = json.loads(item)
+            value = item.decode()
+            try:
+                # if it can be converted into a dict, convert it
+                value = json.loads(value)
+            except json.decoder.JSONDecodeError:
+                # pass it as it is, i.e. String
+                pass
             items.append(value)
         return items
 
@@ -51,16 +54,3 @@ class Store:
 
     def get(self):
         return self.store.get_data(self.key, self.per_fetch_count)
-
-
-redis_store = RedisStore()
-
-tweet_store = Store(store_instance=redis_store,
-                    key="tweets",
-                    per_fetch_count=10,
-                    max_count=15)
-tag_store = Store(store_instance=redis_store,
-                  key="tags",
-                  per_fetch_count=25,
-                  max_count=25)
-

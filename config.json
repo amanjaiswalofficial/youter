@@ -1,6 +1,9 @@
 {
-	"consumer_key": "YOUR_API_KEY",
-	"consumer_secret": "YOUR_API_SECRET",
-	"access_token": "YOUR_ACCESS_TOKEN",
-	"access_token_secret": "YOUR_SECRET_TOKEN"
+	"consumer_key": "",
+	"consumer_secret": "",
+	"access_token": "",
+	"access_token_secret": "",
+	"redis_host": "",
+	"redis_port": 0,
+	"redis_password": ""
 }

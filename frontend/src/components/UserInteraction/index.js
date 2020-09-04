@@ -27,7 +27,7 @@ const UserInteraction = (props, ref) => {
         let statusCode = await sendData(value, "remove")
         if(statusCode === 200){
             remainingTags = tags.filter((singleTag) => {
-                return singleTag != tagToRemove
+                return singleTag !== tagToRemove
             })
         setTags(remainingTags)
         }

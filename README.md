@@ -17,16 +17,22 @@ Create an app on [Twitter for developers](https://developer.twitter.com/en/porta
 
 >ACCESS SECRET
 
+Also setup redis and update its configurations like:
+
+>REDIS HOST
+
+>REDIS PORT
+
+>REDIS PASSWORD
+
 Update ```config.json``` with these values
 
 ## Personalize twitter
 
 After the app is authenticated via the twitter server based on credentials
 
-Update the **topic_to_see** in ```twitter_filter.py```
-
 Run with
 
 ```cd backend```
 
-```python3 twitter_filter.py```
+```python3 run.py```
