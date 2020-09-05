@@ -9,12 +9,33 @@ export const sendData = async (tag, type) => {
                             tag: tag,
                             type: type
                         }}).then((res) => {
-                            console.log(res.data)
-                            return res
+                            return res  
                         }).catch((err) => {
                             console.log(err)
                         })
     
-    return response.status
+    return response.data
 
+}
+
+const getTweets = async () => {
+    let response = await axios({
+                            method: "get",
+                            url: "http://127.0.0.1:5000/tweets"
+                                }).then((res) => {
+                                    return res
+                                }).catch((err) => {
+                                    console.log(err)
+                                })
+                            
+    return response.data
+}
+
+export const getData = async (type) => {
+    switch(type){
+        case "tweets":
+            return await getTweets()
+        default:
+            break
+    }
 }

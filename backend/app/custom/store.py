@@ -40,6 +40,12 @@ class Redis:
             items.append(value)
         return items
 
+    def set_data_by_key(self, key, data):
+        return self.db.set(key, data)
+
+    def get_data_by_key(self, key):
+        return self.db.get(key)
+
 
 class Store:
     def __init__(self, store_instance, per_fetch_count, key, max_count):
@@ -52,5 +58,11 @@ class Store:
         self.store.push(self.key, item)
         self.store.check_count(self.key, self.max_count)
 
-    def get(self):
+    def get_list(self):
         return self.store.get_data(self.key, self.per_fetch_count)
+
+    def get_key(self, key):
+        return self.store.get_data_by_key(key)
+
+    def store_data(self, key, data):
+        return self.store.set_data_by_key(key, data)

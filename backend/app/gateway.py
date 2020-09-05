@@ -3,6 +3,7 @@ import threading
 import json
 from tweepy import Stream, OAuthHandler, API
 
+
 from app.custom.store import Redis, Store
 from app.custom.twitter_listener import StreamListener
 from app.custom.operation_handler import OperationHandler
@@ -54,4 +55,6 @@ op_handler = OperationHandler(twitter_stream=stream,
                               tweet_store=tweet_store,
                               tag_store=tag_store)
 
+
 stream_handler = threading.Thread(target=op_handler.handle_twitter_stream)
+# socket_handler = threading.Thread(target=socket.socket_stream_handler)

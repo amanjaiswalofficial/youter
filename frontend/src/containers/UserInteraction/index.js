@@ -1,31 +1,54 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import { Input } from '@rebass/forms'
 import { Box, Button } from 'rebass'
 import { AppContext } from "context/appContext"
+import {socket} from "App"
 
 
 import {useStyles} from './styles'
-import {sendData} from "utils/helperFunctions"
+import {sendData, getData} from "utils/helperFunctions"
+import TweetHolder from "./TweetHolder"
 
 const UserInteraction = (props, ref) => {
 
     const [value, setValue] = useState("")
     const [tags, setTags] = useState([])
+    const [tweets, setTweets] = useState([])
     const [, dispatch] = useContext(AppContext);
 
     const classes = useStyles()
     
+    useEffect(() => {
+        getTweets()
+    }, [])
+
+
+    useEffect(() => {
+    socket.on("new_tweets", data  => {
+        setTweets([])
+        setTweets(data.tweets)
+        })
+    }, [])
+
+    const getTweets = async () => {
+        // TO CHANGE
+        let data = await getData("tweets")
+        if(data.code === 200){
+            setTweets(data.response)
+        }
+    }
+
     const handleClick = async () => {
-        let statusCode = await sendData(value, "add")
-        if(statusCode === 200){
+        let data = await sendData(value, "add")
+        if(data.code === 200){
             setTags([...tags, value])
         }
     }
 
     const removeTag = async (tagToRemove) => {
         let remainingTags = []
-        let statusCode = await sendData(value, "remove")
-        if(statusCode === 200){
+        let data = await sendData(value, "remove")
+        if(data.code === 200){
             remainingTags = tags.filter((singleTag) => {
                 return singleTag !== tagToRemove
             })
@@ -79,6 +102,7 @@ const UserInteraction = (props, ref) => {
         Your Tags: {tags.map((tag) => {
             return <span onClick={e => removeTag(tag)}>{tag} </span>
         })}
+        {tweets.length > 0 ? <TweetHolder tweets={tweets}/> : null}
        </div>
     )
 }

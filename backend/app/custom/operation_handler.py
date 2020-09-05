@@ -24,10 +24,13 @@ class OperationHandler:
         Get all tags from the cache
         :return: List of all tags (including hashtags and usernames)
         """
-        return self.tag_store.get()
+        return self.tag_store.get_list()
 
     def get_all_tweets(self) -> List:
-        return self.tweet_store.get()
+        return self.tweet_store.get_list()
+
+    # def get_last_tweeted_time(self) -> AnyStr:
+    #     return self.tweet_store.get_last_activity("tweet")
 
     def reset_stream(self) -> None:
         """

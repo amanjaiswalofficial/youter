@@ -1,12 +1,14 @@
 import React, {useRef, useState, useEffect, useContext} from 'react'
 
 import { setConfiguration } from 'react-grid-system';
+import io from "socket.io-client"
+
+
 import downCircleIcon from "../../assets/icons/icon-down-1.png"
 import {useStyles} from './styles'
-
-import Banner from 'components/Banner'
-import UserInteraction from 'components/UserInteraction'
-import ContactInfo from 'components/ContactInfo'
+import Banner from 'containers/Banner'
+import UserInteraction from 'containers/UserInteraction'
+import ContactInfo from 'containers/ContactInfo'
 import { AppContext } from "context/appContext"
 
 

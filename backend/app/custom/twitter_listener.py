@@ -21,6 +21,8 @@ class StreamListener(tweepy.StreamListener):
 			polarity = sent.polarity
 			subjectivity = sent.subjectivity
 
+			received_time = \
+				datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 			tweet_item = {
 				"id_str": tweet['id_str'],
 				"text": tweet['text'],
@@ -29,11 +31,11 @@ class StreamListener(tweepy.StreamListener):
 				"profile_image_url": tweet['user']['profile_image_url'],
 				"polarity": polarity,
 				"subjectivity": subjectivity,
-				"received_at":
-					datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+				"received_at": received_time
+
 				}
 			self.store.push(tweet_item)
-			print(tweet_item["text"])
+			self.store.store_data("last_tweet", received_time)
 
 	def on_status(self, status_code):
 		if status_code == 420:
