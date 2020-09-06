@@ -39,16 +39,18 @@ export const useStyles = createUseStyles({
         transition: ".0s ease",
         transform: "translate(-50%, -50%)",
         zIndex: "113",
-        pointerEvents: "none"
+        pointerEvents: "none",
     },
     // custom cursor CSS for hover
     cursorTitle: {
-        width: "2em",
-        height: "2em",
-        border: "1px solid grey"
+        width: "3em",
+        height: "3em",
+        border: "1px solid yellow",
+        mixBlendMode: "difference",
+        backgroundColor: "yellow"
     },
     cursorScrollButton: {
-        borderRadius: "3%",
+        borderRadius: "50%",
         width: "4em",
         height: "4em"
     },
@@ -56,5 +58,12 @@ export const useStyles = createUseStyles({
         borderRadius: "3%",
         width: "4em",
         height: "4em",
+    },
+    tweetScroller: {
+        width: "3em",
+        height: "3em",
+        border: "1px solid black",
+        backgroundColor: "white",
+        mixBlendMode: "difference",
     }
   })

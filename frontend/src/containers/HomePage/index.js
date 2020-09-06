@@ -1,14 +1,12 @@
 import React, {useRef, useState, useEffect, useContext} from 'react'
-
 import { setConfiguration } from 'react-grid-system';
-import io from "socket.io-client"
 
 
-import downCircleIcon from "../../assets/icons/icon-down-1.png"
 import {useStyles} from './styles'
 import Banner from 'containers/Banner'
 import UserInteraction from 'containers/UserInteraction'
 import ContactInfo from 'containers/ContactInfo'
+import ScrollButton from "components/ScrollButton"
 import { AppContext } from "context/appContext"
 
 
@@ -65,6 +63,10 @@ const HomePage = () => {
         updateRef(nextRef)
     }
 
+    const handleButtonClick = () => {
+        scrollDown(nextRef)
+    }
+
     const moveCustomCursor = (e) => {
 
         document.getElementById("myCursor").setAttribute("style", `top: ${e.clientY + window.pageYOffset}px; left: ${e.clientX + window.pageXOffset}px`)
@@ -76,24 +78,17 @@ const HomePage = () => {
     return (
         <div>
         <div id="myCursor" className={`${classes.cursor} ${classes[hoverItem]}`}/>
+        <ScrollButton 
+        setClass={setClass} 
+        resetClass={resetClass} 
+        handleClick={handleButtonClick}
+        currentRefIndex={nextRef}/>
+        <Banner ref={ref1}/>
         <UserInteraction ref={ref2}/>
         <ContactInfo ref={ref3}/>
-        <button 
-            onClick={e => scrollDown(nextRef)} 
-            className={classes.scrollButton}
-        >
-            <img 
-            data-cursorid="cursorScrollButton"
-            onMouseOver={setClass}
-            onMouseLeave={resetClass}
-            src={downCircleIcon} alt="" className={classes.downIcon}/>
-        </button>
         </div>            
     
     )
 }
 
 export default HomePage
-/**
- * <Banner ref={ref1}/>
- */

@@ -1,17 +1,18 @@
 import React, {useState, useContext, useEffect} from 'react';
-import { Input } from '@rebass/forms'
-import { Box, Button } from 'rebass'
+
+
 import { AppContext } from "context/appContext"
 import {socket} from "App"
 
 
 import {useStyles} from './styles'
 import {sendData, getData} from "utils/helperFunctions"
+import SearchBar from "./SearchBar"
+import Tags from "./Tags"
 import TweetHolder from "./TweetHolder"
 
 const UserInteraction = (props, ref) => {
 
-    const [value, setValue] = useState("")
     const [tags, setTags] = useState([])
     const [tweets, setTweets] = useState([])
     const [, dispatch] = useContext(AppContext);
@@ -38,7 +39,7 @@ const UserInteraction = (props, ref) => {
         }
     }
 
-    const handleClick = async () => {
+    const handleClick = async (value) => {
         let data = await sendData(value, "add")
         if(data.code === 200){
             setTags([...tags, value])
@@ -47,7 +48,7 @@ const UserInteraction = (props, ref) => {
 
     const removeTag = async (tagToRemove) => {
         let remainingTags = []
-        let data = await sendData(value, "remove")
+        let data = await sendData(tagToRemove, "remove")
         if(data.code === 200){
             remainingTags = tags.filter((singleTag) => {
                 return singleTag !== tagToRemove
@@ -76,35 +77,17 @@ const UserInteraction = (props, ref) => {
 
     return (
        <div ref={ref} className={classes.parent}>
-        <Box width={"40%"}>
-        <Input
-        style={{border: "1px solid green", cursor: "none"}}
-            id='email'
-            type='text'
-            placeholder='Search Text Here'
-            onChange={e => setValue(e.target.value)}
-        />
-        </Box>
-        <Button 
-        style={{background: "white",
-                borderRadius: "0%", 
-                border: "1px solid green",
-                cursor: "none", 
-                color: "black"}} 
-        variant='outline' 
-        mr={2}
-        data-cursorid="addButton"
-        onMouseOver={setClass}
-        onMouseLeave={resetClass}
-        onClick={handleClick}>
-        Add
-        </Button>
-        Your Tags: {tags.map((tag) => {
-            return <span onClick={e => removeTag(tag)}>{tag} </span>
-        })}
-        {tweets.length > 0 ? <TweetHolder tweets={tweets}/> : null}
+            <SearchBar 
+            setClass={setClass} 
+            resetClass={resetClass} 
+            handleClick={handleClick}/>
+            <Tags tags={tags} removeTag={removeTag}/>
+            <TweetHolder tweets={tweets}/>
        </div>
     )
 }
 
 export default React.forwardRef(UserInteraction)
+/**
+ *  
+ */

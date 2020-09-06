@@ -7,6 +7,10 @@ import {AppContextProvider} from "context/appContext"
 
 import "./fonts/nexa-light.otf"
 import "./fonts/nexa-bold.otf"
+import "./fonts/crimson-bold.ttf"
+import "./fonts/crimson-regular.ttf"
+import "./fonts/frutiger-neue-lt-light.ttf"
+import "./fonts/frutiger-neue-lt-regular.ttf"
 
 
 ReactDOM.render(

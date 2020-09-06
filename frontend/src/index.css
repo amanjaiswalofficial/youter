@@ -8,6 +8,27 @@
   src: local('nexa-bold'), url(./fonts/nexa-bold.otf) format('truetype');
 }
 
+@font-face {
+  font-family: 'crimson-bold';
+  src: local('crimson-bold'), url(./fonts/crimson-bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'crimson-regular';
+  src: local('crimson-regular'), url(./fonts/crimson-regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'frutigue-regular';
+  src: local('frutigue-regular'), url(./fonts/frutiger-neue-lt-regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'frutigue-light';
+  src: local('frutigue-light'), url(./fonts/frutiger-neue-lt-light.ttf) format('truetype');
+}
+
+
 body {
   margin: 0;
   cursor: none;

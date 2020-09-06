@@ -3,12 +3,10 @@ import { COLORS } from '../../colors'
 
 export const useStyles = createUseStyles({
     parent: {
-        height: "100vh",
-        width: "100vw",
+        height: "100%",
+        width: "100%",
         background: COLORS.white,
-        alignItems: "center"
-    },
-    input: {
-        border: '1px solid yellow'
+        display: "grid",
+        justifyContent:"center"
     }
   })
