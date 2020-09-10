@@ -8,6 +8,7 @@ import UserInteraction from 'containers/UserInteraction'
 import ContactInfo from 'containers/ContactInfo'
 import ScrollButton from "components/ScrollButton"
 import { AppContext } from "context/appContext"
+import {socket} from "App"
 
 
 setConfiguration({ maxScreenClass: 'xxl' });
@@ -18,13 +19,23 @@ const HomePage = () => {
     const [state, dispatch] = useContext(AppContext);
     const [hoverItem, setHoverItem] = useState(state.hoverItem.id)
 
+    socket.on("finish_handshake", connection_id => {
+        dispatch({
+            type: "STORE_CONNECTION_TOKEN",
+            payload: {
+                token: connection_id
+            }
+          })
+    })
+
     const classes = useStyles()
 
     const ref1 = useRef(null)
     const ref2 = useRef(null)
     const ref3 = useRef(null)
 
-    const refIndexes = [ref1, ref2, ref3]
+    const refIndexes = [ref1, ref2]
+    // const refIndexes = [ref1, ref2, ref3]
 
     useEffect(() => {
         setHoverItem(state.hoverItem.className)
@@ -54,7 +65,8 @@ const HomePage = () => {
 
     const updateRef = (ref = ref1) => {
         let currentRefIndex = refIndexes.indexOf(ref)
-        let newRefIndex = currentRefIndex < 2 ? currentRefIndex+1 : 0
+        // let newRefIndex = currentRefIndex < 2 ? currentRefIndex+1 : 0
+        let newRefIndex = currentRefIndex < 1 ? currentRefIndex+1 : 0
         setNextRef(refIndexes[newRefIndex])
     }
 
@@ -77,18 +89,21 @@ const HomePage = () => {
 
     return (
         <div>
-        <div id="myCursor" className={`${classes.cursor} ${classes[hoverItem]}`}/>
-        <ScrollButton 
-        setClass={setClass} 
-        resetClass={resetClass} 
-        handleClick={handleButtonClick}
-        currentRefIndex={nextRef}/>
-        <Banner ref={ref1}/>
-        <UserInteraction ref={ref2}/>
-        <ContactInfo ref={ref3}/>
+            <div id="myCursor" className={`${classes.cursor} ${classes[hoverItem]}`}/>
+            <ScrollButton 
+                setClass={setClass} 
+                resetClass={resetClass} 
+                handleClick={handleButtonClick}
+                currentRefIndex={nextRef}/>
+            <Banner ref={ref1}/>
+            <UserInteraction ref={ref2}/>
         </div>            
     
     )
 }
 
 export default HomePage
+/**
+ * 
+        <ContactInfo ref={ref3}/>
+ */

@@ -8,9 +8,10 @@ from textblob import TextBlob
 
 class StreamListener(tweepy.StreamListener):
 
-	def __init__(self, tweet_store):
+	def __init__(self, tag, tweet_tag_store):
 		super().__init__()
-		self.store = tweet_store
+		self.tweet_tag_store = tweet_tag_store
+		self.tag = tag
 
 	def on_data(self, data):
 		tweet = json.loads(data)
@@ -34,8 +35,7 @@ class StreamListener(tweepy.StreamListener):
 				"received_at": received_time
 
 				}
-			self.store.push(tweet_item)
-			self.store.store_data("last_tweet", received_time)
+			self.tweet_tag_store.push_tweet_for_tag(self.tag, tweet_item)
 
 	def on_status(self, status_code):
 		if status_code == 420:

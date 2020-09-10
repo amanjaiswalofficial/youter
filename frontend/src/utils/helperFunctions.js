@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-export const sendData = async (tag, type) => {
+export const sendData = async (tag, type, token) => {
 
     let response = await axios({
                         method: 'post',
                         url: 'http://127.0.0.1:5000/tag',
                         data: {
                             tag: tag,
-                            type: type
+                            type: type,
+                            token: token
                         }}).then((res) => {
                             return res  
                         }).catch((err) => {

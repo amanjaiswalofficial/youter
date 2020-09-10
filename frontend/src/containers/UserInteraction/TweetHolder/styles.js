@@ -18,6 +18,6 @@ export const useStyles = createUseStyles({
         border: `1px solid ${COLORS.black}`
     },
     selected: {
-        boxShadow: `0 0px 0px 0px ${COLORS.purple}, 0 0px 0px 0px ${COLORS.purple}, 1px 0 3px -4px ${COLORS.purple}, -1px 0 10px -4px ${COLORS.purple};`
+        boxShadow: `0 0px 0px 0px ${COLORS.purple}, 0 0px 0px 0px ${COLORS.purple}, 5px 0 3px -4px ${COLORS.purple}, -5px 0 10px -4px ${COLORS.purple};`
     }
   })

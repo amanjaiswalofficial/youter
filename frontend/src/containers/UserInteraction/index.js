@@ -15,17 +15,13 @@ const UserInteraction = (props, ref) => {
 
     const [tags, setTags] = useState([])
     const [tweets, setTweets] = useState([])
-    const [, dispatch] = useContext(AppContext);
+    const [state, dispatch] = useContext(AppContext);
 
     const classes = useStyles()
-    
-    useEffect(() => {
-        getTweets()
-    }, [])
-
 
     useEffect(() => {
     socket.on("new_tweets", data  => {
+        // TO CHANGE
         setTweets([])
         setTweets(data.tweets)
         })
@@ -40,9 +36,10 @@ const UserInteraction = (props, ref) => {
     }
 
     const handleClick = async (value) => {
-        let data = await sendData(value, "add")
+        let data = await sendData(value, "add", state.connection.token)
         if(data.code === 200){
-            setTags([...tags, value])
+            //setTags([...tags, value])
+            setTags([value])
         }
     }
 
@@ -89,5 +86,5 @@ const UserInteraction = (props, ref) => {
 
 export default React.forwardRef(UserInteraction)
 /**
- *  
+ *  <TweetHolder tweets={tweets}/>
  */
