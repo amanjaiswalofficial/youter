@@ -10,6 +10,8 @@ import {sendData, getData} from "utils/helperFunctions"
 import SearchBar from "./SearchBar"
 import Tags from "./Tags"
 import TweetHolder from "./TweetHolder"
+import {sampleTweets} from "utils/constants"
+
 
 const UserInteraction = (props, ref) => {
 
@@ -27,11 +29,18 @@ const UserInteraction = (props, ref) => {
         })
     }, [])
 
+    useEffect(() => {
+        getTweets()
+    }, [])
+
     const getTweets = async () => {
         // TO CHANGE
         let data = await getData("tweets")
-        if(data.code === 200){
+        if(data){
             setTweets(data.response)
+        }
+        else{
+            setTweets(sampleTweets)
         }
     }
 

@@ -1,5 +1,7 @@
 from __future__ import absolute_import, print_function
 
+from typing import AnyStr
+
 import tweepy
 import datetime
 import json
@@ -13,7 +15,12 @@ class StreamListener(tweepy.StreamListener):
 		self.tweet_tag_store = tweet_tag_store
 		self.tag = tag
 
-	def on_data(self, data):
+	def on_data(self, data: AnyStr) -> None:
+		"""
+		On receiving some data as a tweet, store it in cache for a given tag
+		:param data: A string of data for the tweet
+		:return: None
+		"""
 		tweet = json.loads(data)
 		if "RT @" not in tweet['text']:
 
@@ -33,14 +40,23 @@ class StreamListener(tweepy.StreamListener):
 				"polarity": polarity,
 				"subjectivity": subjectivity,
 				"received_at": received_time
-
 				}
 			self.tweet_tag_store.push_tweet_for_tag(self.tag, tweet_item)
 
-	def on_status(self, status_code):
+	def on_status(self, status_code: int) -> int:
+		"""
+		In case of status_code received, return it
+		:param status_code: Integer value for the status code
+		:return: Returning integer value for the status code
+		"""
 		if status_code == 420:
 			return status_code
 
-	def on_error(self, status_code):
+	def on_error(self, status_code: int) -> int:
+		"""
+		In case of error return the status_code
+		:param status_code:
+		:return: Return integer value for the status code
+		"""
 		if status_code == 420:
 			return status_code

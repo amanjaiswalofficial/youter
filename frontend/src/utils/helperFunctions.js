@@ -29,7 +29,10 @@ const getTweets = async () => {
                                     console.log(err)
                                 })
                             
-    return response.data
+    if(response){
+        return response.data
+    }
+    return null
 }
 
 export const getData = async (type) => {

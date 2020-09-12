@@ -1,19 +1,15 @@
 # Gateway: to handle all the flow between everything, as in everything
-import threading
 import json
-from tweepy import Stream, OAuthHandler, API
+from tweepy import OAuthHandler, API
 
 
 from app.custom.store import Redis, TagConnectionStore, TweetTagStore
-from app.custom.twitter_listener import StreamListener
 from app.custom.operation_handler import OperationHandler
-from app.custom.logging import logger
 from flask import request
 from app.custom.logging import logger
 from flask_socketio import SocketIO
-# from app.gateway import tag_connection_store, redis
 
-file_path = "../config2.json"
+file_path = "./config2.json"
 
 try:
     with open(file_path) as f:
@@ -53,6 +49,7 @@ api = API(auth)
 socket_io = SocketIO(cors_allowed_origins="*")
 
 
+# Determine socket actions on connection and disconnect
 @socket_io.on("connect")
 def start_new_thread():
     connection_id = request.sid
