@@ -9,7 +9,7 @@ from flask import request
 from app.custom.logging import logger
 from flask_socketio import SocketIO
 
-file_path = "./config2.json"
+file_path = "./config.json"
 
 try:
     with open(file_path) as f:
@@ -18,9 +18,9 @@ except FileNotFoundError:
     logger.error("Unable to read config file, please ensure path")
 
 # Setting up Redis and required Stores to save tweets and tags
-host = config.get("redis_host")
-port = config.get("redis_port")
-password = config.get("redis_password")
+host = config.get("redis_host", "localhost")
+port = config.get("redis_port", 6379)
+password = config.get("redis_password", "")
 
 if any([host is None, port is None, password is None]):
     raise KeyError("Incorrect config for Redis, update config file")

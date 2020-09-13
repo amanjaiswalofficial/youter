@@ -1,0 +1,25 @@
+version: '3'
+services:
+  frontend:
+    build: frontend/
+    ports:
+      - "3000:80"
+      
+  backend:
+    build: backend/
+    ports:
+      - "5000:5000"
+    links:
+      - redis
+
+  redis:
+    image: redis:6.0.3
+    restart: always
+
+networks:
+  frontend:
+    driver: network-01
+  backend:    
+    driver: network-01
+  redis:
+    driver: network-01
