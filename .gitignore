@@ -134,3 +134,4 @@ frontend/node_modules
 __pycache__
 .vscode/
 snippets
+backend/.idea/
