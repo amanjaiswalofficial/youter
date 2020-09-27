@@ -1,38 +1,48 @@
 # Youter
-Youter (your personal twitter) is a python+redis+react application that allows you to create your own version of twitter. And read about items that you care about.
+Youter (your twitter) is a flask+react+redis application that allows you to create your own version of twitter. And read about items that you care about.
+
+## How it works
+
+After setting up twitter developer API access and redis, Youter provides with a search bar to enter the term 
+(Ex - **Cricket**, **#Food**, **@skrillex**)
+
+Once running successfully, it will return tweets based on the search term and update feed every 15 seconds.
 
 ## How to get started
 
-Setup virtual environment and install required libraries.
-
-```virtualenv venv -p python3.6```
-```pip install -r requirements.txt```
-
 Create an app on [Twitter for developers](https://developer.twitter.com/en/portal/dashboard) and obtain
->API KEY
 
->API SECRET
+>consumer_key
 
->ACCESS KEY
+>consumer_secret
 
->ACCESS SECRET
+>access_token
 
-Also setup redis and update its configurations like:
+>access_token_secret
 
->REDIS HOST
+Also update values for redis in docker:
 
->REDIS PORT
+>redis_host
 
->REDIS PASSWORD
+>redis_port
 
-Update ```config.json``` with these values
+>redis_password
+
+Update ```docker-compose.yaml``` with these values
+
+
+### Updating environment variables for frontend application
+
+Edit ```frontend/.env``` with required variables to run the application before building image via.
+
+```docker-compose build```
+
+Current *BACKNEND_URL*=*"http://127.0.0.1:5000"*
 
 ## Personalize twitter
 
-After the app is authenticated via the twitter server based on credentials
+After the ```docker-compose.yaml``` file is updated with config values and images built.
 
 Run with
 
-```cd backend```
-
-```python3 run.py```
+```docker-compose up -d```

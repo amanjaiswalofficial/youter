@@ -1,10 +1,14 @@
 import axios from 'axios';
 
+import {backendURL} from "App"
+
 export const sendData = async (tag, type, token) => {
+
+    let url = backendURL + "/tag"
 
     let response = await axios({
                         method: 'post',
-                        url: 'http://127.0.0.1:5000/tag',
+                        url: url,
                         data: {
                             tag: tag,
                             type: type,
@@ -20,9 +24,12 @@ export const sendData = async (tag, type, token) => {
 }
 
 const getTweets = async () => {
+
+    let url = backendURL + "/tweets"
+
     let response = await axios({
                             method: "get",
-                            url: "http://127.0.0.1:5000/tweets"
+                            url: url
                                 }).then((res) => {
                                     return res
                                 }).catch((err) => {

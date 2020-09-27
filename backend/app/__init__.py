@@ -1,13 +1,15 @@
 from flask import Flask
 from flask_cors import CORS
 from flask import request
+from redis.exceptions import ConnectionError
 
-from app.gateway import op_handler, socket_io
+from app.gateway import op_handler, socket_io, redis
 from app.sample_data import tweets
+from app.custom.logging import logger
 
 app = Flask(__name__)
 socket_io.init_app(app)
-CORS(app)
+CORS(app, origins=["*"])
 
 
 # operate on received tag
@@ -33,4 +35,20 @@ def index():
     return {
         "code": 200,
         "response": tweets
+    }
+
+
+@app.route("/healthcheck")
+def health_check():
+    try:
+        print("Redis ping result:", redis.ping_server())
+        code = 200
+        response = "Successfully connected to redis"
+    except ConnectionError as ce:
+        print(ce)
+        code = 404
+        response = "Error connecting redis"
+    return {
+        "code": code,
+        "response": response
     }

@@ -5,7 +5,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomePage from './containers/HomePage'
 
-export let socket = io.connect("http://127.0.0.1:5000")
+export const backendURL = process.env.REACT_APP_BACKEND_URL
+
+export let socket = io.connect(backendURL)
 
 
 function App() {

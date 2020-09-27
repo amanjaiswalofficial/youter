@@ -16,6 +16,13 @@ class Redis(object):
             password=self.password
         )
 
+    def ping_server(self) -> None:
+        """
+        Ping server to see if running correctly
+        :return: None
+        """
+        return self.db.ping()
+
     def get_value_for_key(self, key: AnyStr) -> AnyStr:
         """
         Return a string value

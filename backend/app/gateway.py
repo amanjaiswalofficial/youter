@@ -1,5 +1,6 @@
 # Gateway: to handle all the flow between everything, as in everything
 import json
+import os
 from tweepy import OAuthHandler, API
 
 
@@ -9,21 +10,25 @@ from flask import request
 from app.custom.logging import logger
 from flask_socketio import SocketIO
 
-file_path = "./config.json"
+# file_path = "./config2.json"
+#
+# try:
+#     with open(file_path) as f:
+#         config = json.loads(f.read())
+# except FileNotFoundError:
+#     logger.error("Unable to read config file, please ensure path")
+#
+# # Setting up Redis and required Stores to save tweets and tags
+# host = config.get("redis_host")
+# port = config.get("redis_port")
+# password = config.get("redis_password")
+#
+# if any([host is None, port is None, password is None]):
+#     raise KeyError("Incorrect config for Redis, update config file")
 
-try:
-    with open(file_path) as f:
-        config = json.loads(f.read())
-except FileNotFoundError:
-    logger.error("Unable to read config file, please ensure path")
-
-# Setting up Redis and required Stores to save tweets and tags
-host = config.get("redis_host", "localhost")
-port = config.get("redis_port", 6379)
-password = config.get("redis_password", "")
-
-if any([host is None, port is None, password is None]):
-    raise KeyError("Incorrect config for Redis, update config file")
+host = os.getenv("redis_host")
+port = os.getenv("redis_port")
+password = os.getenv("redis_password")
 
 redis = Redis(host=host, port=port, password=password)
 tweet_tag_store = TweetTagStore(store=redis,
@@ -33,10 +38,15 @@ tag_connection_store = TagConnectionStore(store=redis)
 
 
 # Setting up Twitter streamer with StreamListener
-consumer_key = config.get("consumer_key")
-consumer_secret = config.get("consumer_secret")
-access_token = config.get("access_token")
-access_token_secret = config.get("access_token_secret")
+# consumer_key = config.get("consumer_key")
+# consumer_secret = config.get("consumer_secret")
+# access_token = config.get("access_token")
+# access_token_secret = config.get("access_token_secret")
+
+consumer_key = os.getenv("consumer_key")
+consumer_secret = os.getenv("consumer_secret")
+access_token = os.getenv("access_token")
+access_token_secret = os.getenv("access_token_secret")
 
 if (any([consumer_key is None, consumer_secret is None,
          access_token is None, access_token_secret is None])):

@@ -10,6 +10,9 @@ WORKDIR /usr/src/app
 COPY package.json ./
 COPY . ./
 
+# install dependencies
+RUN npm install
+
 # once done, make the build
 RUN npm run build
 
